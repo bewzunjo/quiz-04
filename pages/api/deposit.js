@@ -15,20 +15,19 @@ export default function depositRoute(req, res) {
     if (typeof amount !== "number")
       return res.status(400).json({ ok: false, message: "Invalid amount" });
 
-    if (amount < 0)
-      //previously it was `amount < 1`
+    //check if amount < 1
+    if (amount < 1)
       return res
         .status(400)
         .json({ ok: false, message: "Amount must be greater than 0" });
 
     //find and update money in DB
     const users = readUsersDB();
-    const userIdx = users.findIndex((x) => x.username === user.username);
-    users[userIdx].money += amount;
+    const userResult = users.find((x) => x.username === user.username);
+    userResult.money = userResult.money + amount;
     writeUsersDB(users);
-
     //return response
-    return res.json({ ok: true, money: users[userIdx].money });
+    return res.status(200).json({ ok: true, money: userResult.money });
   } else {
     return res.status(400).json({ ok: false, message: "Invalid HTTP Method" });
   }
