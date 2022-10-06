@@ -1,4 +1,3 @@
-
 import { checkToken } from "../../backendLibs/checkToken";
 import { readUsersDB } from "../../backendLibs/dbLib";
 
